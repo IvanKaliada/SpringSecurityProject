@@ -3,6 +3,7 @@ package com.gmail.iikaliada.service;
 import com.gmail.iikaliada.entity.Authority;
 import com.gmail.iikaliada.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,6 +20,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserService userService;
 
+    @Value("${time.interval}")
+    private int timeInterval;
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -26,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
-        if (isDateTimeLaterByMinutes(user.getLastTimeFailed(), 5)) {
+        if (isDateTimeLaterByMinutes(user.getLastTimeFailed(), timeInterval)) {
             user.setEnabled(true);
             userService.saveUser(user);
         }
