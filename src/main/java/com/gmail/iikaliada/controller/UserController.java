@@ -4,6 +4,7 @@ import com.gmail.iikaliada.entity.User;
 import com.gmail.iikaliada.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,8 +30,10 @@ public class UserController {
     }
 
     @GetMapping("/blocked")
-    public List<User> getBlockedUsers() {
-        return userService.findBlockedUsers();
+    public String getBlockedUsers(Model model) {
+        List<User> blockedUsers = userService.findBlockedUsers();
+        model.addAttribute("blockedUsers", blockedUsers);
+        return "blocked-users";
     }
 
 }

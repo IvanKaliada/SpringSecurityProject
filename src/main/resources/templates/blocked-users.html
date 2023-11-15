@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Blocked Users</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet"
+          crossorigin="anonymous"/>
+</head>
+<body>
+
+<div class="container">
+    <div style="text-align:center">
+        <h3 class="text-center">List of Blocked Users</h3>
+    </div>
+</div>
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Password</th>
+            <th scope="col">Failed Login Attempts</th>
+            <th scope="col">Last Failed Attempt</th>
+            <th scope="col">Enabled</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${blockedUsers}">
+            <td th:text="${user.userName}"></td>
+            <td th:text="${user.password}"></td>
+            <td th:text="${user.failedLoginAttempt}"></td>
+            <td th:text="${user.lastTimeFailed}"></td>
+            <td th:text="${user.enabled} ? 'Yes' : 'No'"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
